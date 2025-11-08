@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, declarative_base # <--- Змінено тут
+import os
 
-# Використовуємо той самий файл БД, що і в Лабораторній 3
+# БД повинна лежати в КОРЕНЕВІЙ папці проекту, а не в 'app'
+# Шлях 'sqlite:///./lab3.db'
 SQLALCHEMY_DATABASE_URL = "sqlite:///./lab3.db"
 
 engine = create_engine(
@@ -10,7 +11,8 @@ engine = create_engine(
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-Base = declarative_base()
+# Base = declarative_base() # <--- Старий варіант
+Base = declarative_base() # <--- Новий варіант
 
 # Функція для отримання сесії БД
 def get_db():

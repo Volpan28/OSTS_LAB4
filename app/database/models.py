@@ -1,15 +1,12 @@
 from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
 from sqlalchemy.sql import func
-from app.database.database import Base
+from app.database.database import Base  # <--- Виправлено імпорт
 
 
-# Ваша оригінальна таблиця з даними (для читання)
-# Ми визначаємо її тут, щоб SQLAlchemy "знав" про неї
+# 1. Існуюча таблиця з даними (для читання)
 class ObesityData(Base):
     __tablename__ = "obesity_data"
 
-    # Переконайтеся, що ці колонки відповідають вашій БД
-    # Я беру їх з вашого .ipynb файлу (Крок 8)
     id = Column(Integer, primary_key=True, index=True)
     Weight = Column(Float)
     FCVC = Column(Float)
@@ -24,7 +21,7 @@ class ObesityData(Base):
     NObeyesdad = Column(Integer)  # Цільова змінна
 
 
-# НОВА ТАБЛИЦЯ: Зберігає вхідні дані, що йдуть на /predict
+# 2. НОВА ТАБЛИЦЯ: Зберігає вхідні дані з /predict
 class InferenceInputs(Base):
     __tablename__ = "inference_inputs"
 
@@ -44,7 +41,7 @@ class InferenceInputs(Base):
     CALC = Column(Float)
 
 
-# НОВА ТАБЛИЦЯ: Зберігає всі прогнози
+# 3. НОВА ТАБЛИЦЯ: Зберігає всі прогнози (train + inference)
 class Predictions(Base):
     __tablename__ = "predictions"
 

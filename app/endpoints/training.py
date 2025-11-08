@@ -21,4 +21,8 @@ def train_model(db: Session = Depends(database.get_db)):
         _, result = model_service.train_and_save_model(db)
         return result
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        # Обробка помилки, якщо БД порожня
+        if "n_samples=0" in str(e) or "empty" in str(e):
+            raise HTTPException(status_code=400,
+                                detail=f"Помилка тренування: {str(e)}. Переконайтеся, що таблиця 'obesity_data' наповнена даними, запустивши src/ImportToDb.py.")
+        raise HTTPException(status_code=500, detail=f"Внутрішня помилка сервера: {str(e)}")

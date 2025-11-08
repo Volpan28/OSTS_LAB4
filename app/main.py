@@ -3,6 +3,7 @@ from app.database import database, models
 from app.endpoints import training, inference
 
 # Створюємо таблиці в БД, якщо їх ще немає
+# Це створить 'inference_inputs' та 'predictions'
 models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(
@@ -17,4 +18,4 @@ app.include_router(inference.router, prefix="/api")
 
 @app.get("/", tags=["Root"])
 def read_root():
-    return {"message": "Ласкаво просимо до API для прогнозування ожиріння!"}
+    return {"message": "Ласкаво просимо до API для прогнозування ожиріння! Перейдіть на /docs для документації."}

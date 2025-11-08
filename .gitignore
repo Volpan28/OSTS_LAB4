@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# venv
+.venv/
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+
+# Бази даних та моделі
+*.db
+*.db-journal
+models/
+*.pkl
+
+# OS files
+.DS_Store
+Thumbs.db

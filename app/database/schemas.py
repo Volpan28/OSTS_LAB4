@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import Optional
 
 # Схема для JSON-тіла запиту на /predict
-# Вона повинна містити всі ознаки, які потрібні моделі
+# (на основі 10 ознак з твого task 8.py)
 class InferenceInput(BaseModel):
     Weight: float
     FCVC: float
@@ -15,11 +15,11 @@ class InferenceInput(BaseModel):
     SCC: float
     CALC: float
 
-# Схема для створення запису в таблиці inference_inputs
+# Схема для запису в таблицю inference_inputs
 class InferenceInputCreate(InferenceInput):
     pass
 
-# Схема для створення запису в таблиці predictions
+# Схема для запису в таблицю predictions
 class PredictionCreate(BaseModel):
     true_label: Optional[int] = None
     predicted_label: int
