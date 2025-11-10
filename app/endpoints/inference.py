@@ -7,7 +7,8 @@ import pandas as pd
 router = APIRouter()
 
 
-# НЕ завантажуємо модель глобально, щоб уникнути застарівання
+# НЕ завантажуємо модель тут глобально
+# model = model_service.load_model_for_inference() <--- ВИДАЛИ ЦЕЙ РЯДОК АБО ЗАКОМЕНТУЙ
 
 @router.post("/predict", response_model=schemas.PredictionCreate, tags=["Inference"])
 def predict(
@@ -17,6 +18,7 @@ def predict(
     """
     Робить прогноз для нових даних.
     """
+
     # 1. Завантажуємо модель З ДИСКА при кожному запиті
     # Це гарантує, що ми використовуємо версію, навчену через /train-model
     try:
