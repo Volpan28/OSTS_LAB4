@@ -7,9 +7,10 @@ import pandas as pd
 router = APIRouter()
 
 
-# v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v
-# Глобального завантаження моделі тут НЕМАЄ.
-# v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v v
+# -----------------------------------------------------------------
+# НЕ завантажуємо модель тут глобально!
+# Рядки, що були тут (try/except ... model = ...), видалені.
+# -----------------------------------------------------------------
 
 @router.post("/predict", response_model=schemas.PredictionCreate, tags=["Inference"])
 def predict(
@@ -20,7 +21,8 @@ def predict(
     Робить прогноз для нових даних.
     """
 
-    # Модель завантажується З ДИСКА кожного разу ТУТ
+    # 1. Завантажуємо модель З ДИСКА при кожному запиті
+    # Це гарантує, що ми використовуємо версію, навчену через /train-model
     try:
         model = model_service.load_model_for_inference()
     except FileNotFoundError as e:
@@ -31,13 +33,13 @@ def predict(
     # 2. Логуємо вхідні дані
     crud.create_inference_input(db, input_data)
 
-    # 3. Робимо прогноз
+    # 3. Робимо прогноз (вже з правильним порядком колонок)
     prediction_result = model_service.predict_single(model, input_data)
 
     # 4. Логуємо вихідні дані
     prediction_log = schemas.PredictionCreate(
         predicted_label=prediction_result,
-        source="inference"
+        source="inference"  # true_label = null (це правильно)
     )
     db_log = crud.create_prediction(db, prediction_log)
 

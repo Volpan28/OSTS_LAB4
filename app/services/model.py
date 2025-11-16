@@ -14,14 +14,14 @@ MODEL_PATH = os.path.join(MODEL_DIR, "xgboost_optimized.pkl")
 os.makedirs(MODEL_DIR, exist_ok=True)
 
 # Гіперпараметри, знайдені в Лабораторній 3 (Крок 11)
-best_params = {
-    'n_estimators': 387,
-    'max_depth': 7,
-    'learning_rate': 0.11234,
-    'subsample': 0.823,
-    'colsample_bytree': 0.745,
-    'min_child_weight': 4
-}
+# best_params = {
+#     'n_estimators': 387,
+#     'max_depth': 7,
+#     'learning_rate': 0.11234,
+#     'subsample': 0.823,
+#     'colsample_bytree': 0.745,
+#     'min_child_weight': 4
+# }
 
 # Визначаємо список ознак (на основі Кроку 10)
 FEATURE_NAMES = [
@@ -50,7 +50,7 @@ def train_and_save_model(db: Session):
 
     print(f"Тренування моделі на {len(X_train)} зразках...")
     model = XGBClassifier(
-        **best_params,
+        # **best_params,  <--- Видалено
         random_state=42,
         eval_metric='mlogloss',
         use_label_encoder=False
