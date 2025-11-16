@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 # НЕ завантажуємо модель тут глобально
-# model = model_service.load_model_for_inference() <--- ВИДАЛИ ЦЕЙ РЯДОК АБО ЗАКОМЕНТУЙ
+# model = model_service.load_model_for_inference() <--- ЦЕЙ РЯДОК ПОТРІБНО ВИДАЛИТИ/ЗАКОМЕНТУВАТИ
 
 @router.post("/predict", response_model=schemas.PredictionCreate, tags=["Inference"])
 def predict(

@@ -15,7 +15,7 @@ ENV/
 # Бази даних та моделі
 *.db
 *.db-journal
-models/
+app/models/
 *.pkl
 
 # OS files
