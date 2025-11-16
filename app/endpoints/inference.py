@@ -7,8 +7,10 @@ import pandas as pd
 router = APIRouter()
 
 
-# НЕ завантажуємо модель тут глобально
-# model = model_service.load_model_for_inference() <--- ЦЕЙ РЯДОК ПОТРІБНО ВИДАЛИТИ/ЗАКОМЕНТУВАТИ
+# -----------------------------------------------------------------
+# НЕ завантажуємо модель тут глобально!
+# Рядки, що були тут (try/except ... model = ...), видалені.
+# -----------------------------------------------------------------
 
 @router.post("/predict", response_model=schemas.PredictionCreate, tags=["Inference"])
 def predict(
@@ -35,7 +37,7 @@ def predict(
     # 4. Логуємо вихідні дані
     prediction_log = schemas.PredictionCreate(
         predicted_label=prediction_result,
-        source="inference"
+        source="inference"  # true_label = null (це правильно)
     )
     db_log = crud.create_prediction(db, prediction_log)
 
